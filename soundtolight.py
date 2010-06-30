@@ -11,15 +11,17 @@ mapFrequ = {  0   : [0],
             225   : [8]}
 
 class SoundToLight ():
-    def __init__ ( self ):
-        self.universe = 1
+    def __init__ ( self, universe=1, fade=True, scale=True, fadeStep=0):
+        self.universe = universe
         self.bars = 10
-        self.interval = 0.2
-        self._quit = False
-        time.sleep(1)
+        self.fade = fade
+        self.scale = scale
+        self.fadeStep = fadeStep
+        
         self.olddata = []
         self.data = [ 0 for i in range( 256 ) ]
-        self.manager = FrequencyManager()
+        
+        self.manager = FrequencyManager(fade, scale, fadeStep)
         
         print "Frequencys:"
         for freq in range(0, 256, 256/(self.bars)):
@@ -29,10 +31,12 @@ class SoundToLight ():
         #init wrapper
         self.wrapper = client_wrapper.ClientWrapper()
         self.client = self.wrapper.Client()
-        self.run()
     
-    def update(self):
-        audio_sample_array = impulse.getSnapshot(True)
+    def update(self, audio_sample_array=None):
+        if audio_sample_array is None:
+            print "Standalone Modus:"
+            audio_sample_array = impulse.getSnapshot(True)
+        
         l = len(audio_sample_array)
         
         for freq in range(0, l, l/self.bars):
@@ -49,21 +53,23 @@ class SoundToLight ():
         dataArray = array.array('B', self.data)
         self.client.SendDmx(self.universe, dataArray)
             
-    def run(self):
+    def run(self, interval=0.2):
+        self._quit = False
+        
         while not self._quit:
             self.update()
-            time.sleep(self.interval)
+            time.sleep(interval)
         self.wrapper.Stop()
 
 
 class FrequencyManager():
-    def __init__ (self):
+    def __init__ (self, scale=False, fade=False, fadeStep=1):
         self.mapping = {}
-        self.scale = True
-        self.fade = True
+        self.scale = scale
+        self.fade = fade
         self.scaling= {}
         self.defaultScaling = {5: 0, 10: 50, 20: 100, 30: 150}
-        self.scaleDiff = 1
+        self.fadeStep = fadeStep
         
         for f, ch in mapFrequ.iteritems(): 
             self.add(f, ch);
@@ -84,7 +90,8 @@ class FrequencyManager():
 
     def getValue(self, freqstep, value, oldval):
         newval = 0
-
+        #print freqstep, value, oldval, 
+        
         if self.scale:
             #
             scaleKeys = self.scaling[freqstep].keys()
@@ -100,14 +107,19 @@ class FrequencyManager():
                         break
         else:
             newval = int(value*2.5)
-        print "newval is %s for freqstep %s" % (newval, freqstep) 
+        #print "newval is %s for freqstep %s" % (newval, freqstep) 
         
         if self.fade:
-            if oldval!=0 and newval<oldval and oldval > self.scaleDiff:
-                newval = int(oldval-self.scaleDiff)
+            if oldval!=0 and newval<oldval and oldval > self.fadeStep:
+                newval = int(oldval-self.fadeStep)
+        
+        #print newval
                 
         return newval
             
 #Start:
-SoundToLight()
 
+
+if __name__ == "__main__":
+    stl = SoundToLight()
+    stl.run()

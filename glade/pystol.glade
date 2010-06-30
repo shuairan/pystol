@@ -2,8 +2,8 @@
 <interface>
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
-  <object class="GtkWindow" id="PyStoL">
-    <property name="title" translatable="yes">PyStoL</property>
+  <object class="GtkWindow" id="Pystol">
+    <property name="title" translatable="yes">Pystol</property>
     <child>
       <object class="GtkVBox" id="PystolMainWindow">
         <property name="visible">True</property>

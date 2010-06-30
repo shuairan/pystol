@@ -3,6 +3,8 @@
 import sys
 import math
 import impulse
+from soundtolight import SoundToLight
+
 try:
     import pygtk
     pygtk.require("2.0")
@@ -37,7 +39,7 @@ class PystolGTK:
     """This is an Hello World GTK application"""
 
     def __init__(self):
-    
+        
         #Set the Glade file
         self.builder = gtk.Builder()
         self.gladefile = "./glade/pystol.glade"  
@@ -45,18 +47,21 @@ class PystolGTK:
         
         #builder.connect_signals(anobject)
         #builder.get_object(name)
-        self.window = self.builder.get_object("PyStoL")
+        self.window = self.builder.get_object("Pystol")
         self.builder.connect_signals(self)
         
         self.spectrumArea = self.builder.get_object("analyzer")
         gtk.DrawingArea.__init__(self.spectrumArea)
         self.spectrumArea.connect("expose-event", self.expose)
         
+        self.sound2light = SoundToLight(universe=1, fade=True, fadeStep=5, scale=True)
+        
         self.timer = gobject.timeout_add( 33, self.update )
 
     def update (self):
-
+        self.audio_sample_array = impulse.getSnapshot(True)
         self.redraw_canvas()
+        self.sound2light.update(self.audio_sample_array)
         return True # keep running this event
     
     def redraw_canvas (self):
@@ -87,17 +92,15 @@ class PystolGTK:
         
         #print "Print:",  rect.x, rect.y, rect.width, rect.height
         
-        audio_sample_array = impulse.getSnapshot(True)
-        
-        freq = len( audio_sample_array ) / n_cols
+        freq = len( self.audio_sample_array ) / n_cols
 
         col_width = rect.width/(n_cols +2 )
         row_height = rect.height / (n_rows)
         #print col_width
-        for i in range( 0, len( audio_sample_array ), freq ):
+        for i in range( 0, len( self.audio_sample_array ), freq ):
 
             col = i / freq
-            rows = int( audio_sample_array[ i ] * n_rows )
+            rows = int( self.audio_sample_array[ i ] * n_rows )
             
             cr.set_source_rgba( bar_color[ 0 ], bar_color[ 1 ], bar_color[ 2 ], bar_color[ 3 ] )
 
