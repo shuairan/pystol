@@ -1,0 +1,17 @@
+computer
+blue
+red
+green
+orange
+yellow
+white
+black
+aqua
+lime
+navy
+purple
+magenta
+indigo
+gray
+gold
+

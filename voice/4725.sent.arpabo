@@ -1,0 +1,85 @@
+Language model created by QuickLM on Wed Jun 30 10:08:51 EDT 2010
+Copyright (c) 1996-2000
+Carnegie Mellon University and Alexander I. Rudnicky
+
+This model based on a corpus of 16 sentences and 18 words
+The (fixed) discount mass is 0.5
+
+\data\
+ngram 1=18
+ngram 2=32
+ngram 3=16
+
+\1-grams:
+-0.7782 </s> -0.3010
+-0.7782 <s> -0.2218
+-1.9823 AQUA -0.2218
+-1.9823 BLACK -0.2218
+-1.9823 BLUE -0.2218
+-1.9823 COMPUTER -0.2218
+-1.9823 GOLD -0.2218
+-1.9823 GRAY -0.2218
+-1.9823 GREEN -0.2218
+-1.9823 INDIGO -0.2218
+-1.9823 LIME -0.2218
+-1.9823 MAGENTA -0.2218
+-1.9823 NAVY -0.2218
+-1.9823 ORANGE -0.2218
+-1.9823 PURPLE -0.2218
+-1.9823 RED -0.2218
+-1.9823 WHITE -0.2218
+-1.9823 YELLOW -0.2218
+
+\2-grams:
+-1.5051 <s> AQUA 0.0000
+-1.5051 <s> BLACK 0.0000
+-1.5051 <s> BLUE 0.0000
+-1.5051 <s> COMPUTER 0.0000
+-1.5051 <s> GOLD 0.0000
+-1.5051 <s> GRAY 0.0000
+-1.5051 <s> GREEN 0.0000
+-1.5051 <s> INDIGO 0.0000
+-1.5051 <s> LIME 0.0000
+-1.5051 <s> MAGENTA 0.0000
+-1.5051 <s> NAVY 0.0000
+-1.5051 <s> ORANGE 0.0000
+-1.5051 <s> PURPLE 0.0000
+-1.5051 <s> RED 0.0000
+-1.5051 <s> WHITE 0.0000
+-1.5051 <s> YELLOW 0.0000
+-0.3010 AQUA </s> -0.3010
+-0.3010 BLACK </s> -0.3010
+-0.3010 BLUE </s> -0.3010
+-0.3010 COMPUTER </s> -0.3010
+-0.3010 GOLD </s> -0.3010
+-0.3010 GRAY </s> -0.3010
+-0.3010 GREEN </s> -0.3010
+-0.3010 INDIGO </s> -0.3010
+-0.3010 LIME </s> -0.3010
+-0.3010 MAGENTA </s> -0.3010
+-0.3010 NAVY </s> -0.3010
+-0.3010 ORANGE </s> -0.3010
+-0.3010 PURPLE </s> -0.3010
+-0.3010 RED </s> -0.3010
+-0.3010 WHITE </s> -0.3010
+-0.3010 YELLOW </s> -0.3010
+
+\3-grams:
+-0.3010 <s> AQUA </s>
+-0.3010 <s> BLACK </s>
+-0.3010 <s> BLUE </s>
+-0.3010 <s> COMPUTER </s>
+-0.3010 <s> GOLD </s>
+-0.3010 <s> GRAY </s>
+-0.3010 <s> GREEN </s>
+-0.3010 <s> INDIGO </s>
+-0.3010 <s> LIME </s>
+-0.3010 <s> MAGENTA </s>
+-0.3010 <s> NAVY </s>
+-0.3010 <s> ORANGE </s>
+-0.3010 <s> PURPLE </s>
+-0.3010 <s> RED </s>
+-0.3010 <s> WHITE </s>
+-0.3010 <s> YELLOW </s>
+
+\end\

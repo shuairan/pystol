@@ -5,6 +5,7 @@ import math
 import impulse
 from soundtolight import SoundToLight
 
+
 try:
     import pygtk
     pygtk.require("2.0")
@@ -56,9 +57,17 @@ class PystolGTK:
         self.spectrumArea.connect("expose-event", self.expose)
         
         self.sound2light = SoundToLight(universe=1, fade=True, fadeStep=5, scale=True)
+        self.voicecontrol = None
         
         self.timer = gobject.timeout_add( 33, self.update )
     
+    def tab_switch_callback(self, notebook, page, page_num):
+        if page_num == 2:
+            if not self.voicecontrol:
+                from voice import VoiceControl
+                self.voicecontrol = VoiceControl(self.builder.get_object("voice_control"))
+            
+            
     def soundcontrol_toggle_callback(self, button):
         self.sound2light.active = button.get_active()
     

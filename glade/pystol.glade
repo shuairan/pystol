@@ -8,15 +8,14 @@
       <object class="GtkNotebook" id="notebook1">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
+        <signal name="switch_page" handler="tab_switch_callback"/>
         <child>
           <object class="GtkVBox" id="PystolMainPanel">
             <property name="visible">True</property>
-            <property name="orientation">vertical</property>
             <property name="spacing">10</property>
             <child>
               <object class="GtkHButtonBox" id="hbuttonbox1">
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkCheckButton" id="checkbutton_soundanalyzer">
                     <property name="label" translatable="yes">Sound Control on</property>
@@ -111,7 +110,6 @@
                 <child>
                   <object class="GtkVBox" id="vbox2">
                     <property name="visible">True</property>
-                    <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkLabel" id="label6">
                         <property name="visible">True</property>
@@ -270,7 +268,6 @@
         <child>
           <object class="GtkVBox" id="vbox1">
             <property name="visible">True</property>
-            <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
@@ -296,12 +293,12 @@
           </packing>
         </child>
         <child>
-          <object class="GtkFrame" id="Voice Contro">
+          <object class="GtkFrame" id="voice_control_frame">
             <property name="visible">True</property>
             <property name="label_xalign">0</property>
             <property name="shadow_type">none</property>
             <child>
-              <object class="GtkAlignment" id="alignment2">
+              <object class="GtkAlignment" id="voice_control">
                 <property name="visible">True</property>
                 <property name="left_padding">12</property>
                 <child>
@@ -310,7 +307,7 @@
               </object>
             </child>
             <child type="label">
-              <object class="GtkLabel" id="voice_control_frame">
+              <object class="GtkLabel" id="voice_control_label">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">&lt;b&gt;Voice Control&lt;/b&gt;</property>
                 <property name="use_markup">True</property>
