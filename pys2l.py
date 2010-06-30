@@ -22,7 +22,7 @@ class SoundToLight ():
         self.manager = FrequencyManager()
         
         print "Frequencys:"
-        for freq in range(0, 256, 256/self.bars):
+        for freq in range(0, 256, 256/(self.bars)):
                 print freq,
         print "."
         
@@ -98,14 +98,14 @@ class FrequencyManager():
                         #print value, '<=', key, "==>",self.scaling[freqstep][key]
                         newval = self.scaling[freqstep][key]
                         break
-                    
         else:
             newval = int(value*2.5)
+        print "newval is %s for freqstep %s" % (newval, freqstep) 
         
-        if self.fade:               
-            if oldval!=0 and newval<oldval:
+        if self.fade:
+            if oldval!=0 and newval<oldval and oldval > self.scaleDiff:
                 newval = int(oldval-self.scaleDiff)
-        
+                
         return newval
             
 #Start:
