@@ -50,6 +50,7 @@ class PystolGTK:
         self.window = self.builder.get_object("Pystol")
         self.builder.connect_signals(self)
         
+        
         self.spectrumArea = self.builder.get_object("analyzer")
         gtk.DrawingArea.__init__(self.spectrumArea)
         self.spectrumArea.connect("expose-event", self.expose)
@@ -57,11 +58,29 @@ class PystolGTK:
         self.sound2light = SoundToLight(universe=1, fade=True, fadeStep=5, scale=True)
         
         self.timer = gobject.timeout_add( 33, self.update )
-
+    
+    def soundcontrol_toggle_callback(self, button):
+        self.sound2light.active = button.get_active()
+    
+    def fade_toggle_callback(self, button):
+        self.sound2light.manager.fade = button.get_active()
+    
+    def scale_toggle_callback(self, button):
+        self.sound2light.manager.scale = button.get_active()
+    
+    def universe_changed_callback(self, spinbutton):
+        self.sound2light.universe = spinbutton.get_value_as_int()
+    
+    def fadestep_changed_callback(self, fader):
+        self.sound2light.manager.fadeStep = int(fader.get_value())
+    
     def update (self):
         self.audio_sample_array = impulse.getSnapshot(True)
         self.redraw_canvas()
-        self.sound2light.update(self.audio_sample_array)
+
+        if self.sound2light.active:
+            self.sound2light.update(self.audio_sample_array)
+
         return True # keep running this event
     
     def redraw_canvas (self):

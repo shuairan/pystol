@@ -18,6 +18,8 @@ class SoundToLight ():
         self.scale = scale
         self.fadeStep = fadeStep
         
+        self.active = True
+        
         self.olddata = []
         self.data = [ 0 for i in range( 256 ) ]
         
