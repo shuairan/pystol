@@ -16,20 +16,42 @@ pygst.require('0.10')
 gobject.threads_init()
 import gst
 
-
 import sys
 import os
 import webcolors
 
 """Helpers:"""
 
-def getColor(name):
-    try:
-         return webcolors.name_to_rgb(name, spec='css3')
-    except ValueError:
-        print "Oops! '%s' is no valid color.  Try again..." % (name)
-        return 0, 0, 0
 
+COLORS = {  'red'   : (255, 0, 0),
+            'lime'  : (0, 255, 0),
+            'green' : (0, 128, 0),
+            'blue'  : (0, 0, 255) ,
+            'white' : (255, 255, 255) ,
+            'black' : (0, 0, 0) ,
+            'yellow': (255, 255, 0) ,
+            'aqua'  : (0, 255, 255) ,
+            'orange': (255, 165, 0) ,
+            'navy'  : (0, 0, 128) ,
+            'purple': (128, 0, 128) ,
+            'magenta':(255, 0, 255) ,
+            'indigo': (75, 0, 130) ,
+            'gray'  : (128, 128, 128),
+            'grey'  : (128, 128, 128),
+            'fuchsia':(255, 0, 255),
+            'maroon': (128, 0, 0),
+            'olive' : (128, 128, 0),
+            'silver': (192, 192, 192),
+            'teal'  : (0, 128, 128)
+         }
+         
+def getColor(name, default=(0, 0, 0)):
+    name = name.lower()
+    if name in COLORS:
+        return COLORS[name]
+    else:
+        return default
+        
 def sendColor(color):
     os.popen("ola_set_dmx -u 1 -d %s,%s,%s,0,0,0,%s,%s,%s,0,0,0" % color)
 
@@ -65,8 +87,8 @@ class VoiceControl(object):
         asr.connect('result', self.asr_result)
         asr.set_property('configured', True)
         
-        asr.set_property('lm', '/media/20gb/Dropbox/devel/pystol/voice/4725.lm')
-        asr.set_property('dict', '/media/20gb/Dropbox/devel/pystol/voice/4725.dic')
+        asr.set_property('lm', 'voice/4725.lm')
+        asr.set_property('dict', 'voice/4725.dic')
         
         bus = self.pipeline.get_bus()
         bus.add_signal_watch()
@@ -117,11 +139,10 @@ class VoiceControl(object):
         self.textbuf.delete_selection(True, self.text.get_editable())
         self.textbuf.insert_at_cursor(hyp)
         self.textbuf.end_user_action()
-        
+
         if str(self.lastmsg)=="COMPUTER":
             color = getColor(hyp)
             sendColor(color + color) 
-        
         self.lastmsg = hyp
         
     def button_clicked(self, button):
@@ -131,5 +152,6 @@ class VoiceControl(object):
             self.pipeline.set_state(gst.STATE_PLAYING)
         else:
             button.set_label("Speak")
+            self.pipeline.set_state(gst.STATE_PAUSED)
             vader = self.pipeline.get_by_name('vad')
             vader.set_property('silent', True)

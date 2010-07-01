@@ -58,6 +58,7 @@ class PystolGTK:
         
         self.sound2light = SoundToLight(universe=1, fade=True, fadeStep=5, scale=True)
         self.voicecontrol = None
+        self.fadecontrol = None
         
         self.timer = gobject.timeout_add( 33, self.update )
     
