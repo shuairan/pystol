@@ -1,0 +1,17 @@
+Configuration:
+	add a config
+	autosave and autoload
+	start with last params
+	set GUI at startup to this params
+
+Sound:
+	Add gstreamer as alternative to pulseaudio?
+	Fix GUI bugs in Spectrum Analyzer
+	Add Channel Mapping 
+	Add Scaling configuration
+
+Fade:
+	build it...
+
+Voice:
+	VoxImp
