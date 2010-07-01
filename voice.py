@@ -20,6 +20,8 @@ import sys
 import os
 import webcolors
 
+TRIGGER = "COMPUTER"
+
 """Helpers:"""
 
 
@@ -139,10 +141,13 @@ class VoiceControl(object):
         self.textbuf.delete_selection(True, self.text.get_editable())
         self.textbuf.insert_at_cursor(hyp)
         self.textbuf.end_user_action()
-
-        if str(self.lastmsg)=="COMPUTER":
+        
+        if str(hyp).startswith(TRIGGER) and len(hyp) > len(TRIGGER):
+            color = getColor(hyp.split(" ")[1])
+            sendColor(color + color)
+        elif str(self.lastmsg)==TRIGGER:
             color = getColor(hyp)
-            sendColor(color + color) 
+            sendColor(color + color)
         self.lastmsg = hyp
         
     def button_clicked(self, button):
